@@ -9,4 +9,10 @@ This repository is a collection of hands-on exercises and examples of practice w
 - **Database Schema**: Explore a well-structured database schema that aligns with the exercises, making it easier to follow along.
 - **READMEs**: Each exercise comes with detailed explanations, sample queries, and expected outcomes to guide you through the learning process.
 
+## Author
+
+Mahmoud Mohamed
+Email: mahmoud.abdalaziz@outlook.com
+LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
 Happy learning and coding! 🚀
