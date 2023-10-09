@@ -11,8 +11,8 @@ This repository is a collection of hands-on exercises and examples of practice w
 
 ## Author
 
-Mahmoud Mohamed
-Email: mahmoud.abdalaziz@outlook.com
-LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
 
 Happy learning and coding! 🚀
