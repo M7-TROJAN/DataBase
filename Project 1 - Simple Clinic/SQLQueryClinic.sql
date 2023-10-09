@@ -87,5 +87,5 @@ CREATE TABLE Prescriptions (
     StartDate DATE, -- Start date for the prescription
     EndDate DATE, -- End date for the prescription
     SpecialInstructions NVARCHAR(200), 
-    CONSTRAINT FK_MedicalRecord FOREIGN KEY (MedicalRecordID) REFERENCES Medical_Records(MedicalRecordID)
+    CONSTRAINT FK_MedicalRecord_Prescription FOREIGN KEY (MedicalRecordID) REFERENCES Medical_Records(MedicalRecordID)
 );
