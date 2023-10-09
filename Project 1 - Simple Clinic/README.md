@@ -39,4 +39,13 @@ You can use this database to:
 
 Feel free to customize and extend the database schema to meet your specific requirements.
 
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
+
+
 
