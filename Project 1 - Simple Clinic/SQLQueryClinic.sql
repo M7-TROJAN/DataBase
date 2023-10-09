@@ -17,14 +17,15 @@ CREATE TABLE Persons (
 -- Create the Doctors table with a foreign key constraint to Persons
 CREATE TABLE Doctors (
     DoctorId INT IDENTITY(1, 1) PRIMARY KEY,
-    PersonId INT, -- Foreign key reference to Persons table's PersonId.
+    PersonId INT UNIQUE, -- Foreign key reference to Persons table's PersonId.
+	Specialization nvarchar(50) not null,
     CONSTRAINT FK_Doctor_Person FOREIGN KEY (PersonId) REFERENCES Persons(PersonId)
 );
 
 -- Create the Patients table with a foreign key constraint to Persons
 CREATE TABLE Patients (
     PatientId INT IDENTITY(1, 1) PRIMARY KEY,
-    PersonId INT, -- Foreign key reference to Persons table's PersonId.
+    PersonId INT UNIQUE, -- Foreign key reference to Persons table's PersonId.
     CONSTRAINT FK_Patient_Person FOREIGN KEY (PersonId) REFERENCES Persons(PersonId)
 );
 
@@ -89,3 +90,48 @@ CREATE TABLE Prescriptions (
     SpecialInstructions NVARCHAR(200), 
     CONSTRAINT FK_MedicalRecord_Prescription FOREIGN KEY (MedicalRecordID) REFERENCES Medical_Records(MedicalRecordID)
 );
+
+
+-- Trigger for inserting a new doctor
+CREATE TRIGGER PreventDoctorAsPatient
+ON Doctors
+FOR INSERT
+AS
+BEGIN
+    DECLARE @PersonName NVARCHAR(200);
+    SELECT @PersonName = p.Name
+    FROM Persons p
+    WHERE p.PersonId IN (SELECT PersonId FROM inserted);
+
+    IF @PersonName IS NOT NULL
+    BEGIN
+        DECLARE @ErrorMessage NVARCHAR(200);
+        SET @ErrorMessage = 'Person ' + @PersonName + ' is already a patient and cannot be a doctor.';
+        THROW 50000, @ErrorMessage, 1;
+        ROLLBACK TRANSACTION; -- Rollback the insert
+    END;
+END;
+
+-- Trigger for inserting a new patient
+CREATE TRIGGER PreventPatientAsDoctor
+ON Patients
+FOR INSERT
+AS
+BEGIN
+    DECLARE @PersonName NVARCHAR(200);
+    SELECT @PersonName = p.Name
+    FROM Persons p
+    WHERE p.PersonId IN (SELECT PersonId FROM inserted);
+
+    IF @PersonName IS NOT NULL
+    BEGIN
+        DECLARE @ErrorMessage NVARCHAR(200);
+        SET @ErrorMessage = 'Person ' + @PersonName + ' is already a doctor and cannot be a patient.';
+        THROW 50000, @ErrorMessage, 1;
+        ROLLBACK TRANSACTION; -- Rollback the insert
+    END;
+END;
+
+
+-- If U want to dele a TRIGGER Use The Below Statment
+-- DROP TRIGGER TriggerName;
