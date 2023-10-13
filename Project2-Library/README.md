@@ -160,14 +160,14 @@ VALUES (@NewUserId, DATEADD(YEAR, 1, GETDATE())); -- Assuming a 1-year subscript
 
 COMMIT; -- Commit the transaction if both inserts are successful
 ```
-Example to insert an Author
+- Example to insert an Author
 ```sql
 INSERT INTO Authors (Name, DateOfBirth)
 VALUES ('Taha Hussein', '1889-11-14');
 ```
 
 
-Example to insert a Book
+- Example to insert a Book
 ```sql
 INSERT INTO Books (Title, ISBN, PublicationDate, Genre, AdditionalDetails)
 VALUES ('The Days', '978-1-123456-00-0', '2023-01-01', 'Autobiography', 'An autobiography of a famous author.');
@@ -181,7 +181,7 @@ INSERT INTO AuthorsBooks (AuthorID, BookID)
 VALUES (@NewAuthorId, @NewBookId);
 ```
 
- Insert a new Book Copy and link it to the Book
+- Insert a new Book Copy and link it to the Book
 ```sql
 DECLARE @NewBookId INT;
 SELECT @NewBookId = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
@@ -197,7 +197,7 @@ INSERT INTO BookCopies (BookID, AvailabilityStatus)
 VALUES (@NewBookId, 1); -- Assuming the initial availability status is 1 (available)
 ```
 
-Example to perform a Borrowing transaction
+- Example to perform a Borrowing transaction
 ```sql
 -- Assuming you have a LibraryCard for the user and a BookCopy available
 -- You need to have the LibraryCardID and BookCopyID to execute this
@@ -221,7 +221,7 @@ WHERE CopyID = @BookCopyID;
 COMMIT; -- Commit the transaction if both inserts are successful
 ```
 
-Feel free to customize and extend the database schema to meet your specific requirements.
+- Feel free to customize and extend the database schema to meet your specific requirements.
 
 ## Author
 
@@ -229,4 +229,4 @@ Feel free to customize and extend the database schema to meet your specific requ
 - Email: mahmoud.abdalaziz@outlook.com
 - LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
 
-Happy learning and coding! 🚀
+- Happy learning and coding! 🚀
