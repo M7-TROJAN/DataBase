@@ -229,4 +229,4 @@ COMMIT; -- Commit the transaction if both inserts are successful
 - Email: mahmoud.abdalaziz@outlook.com
 - LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
 
-- Happy learning and coding! 🚀
+Happy learning and coding! 🚀
