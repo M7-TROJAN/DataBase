@@ -137,3 +137,96 @@ To perform a borrowing transaction, use the following script:
 -- Update the BookCopy's availability status to checked out
 -- UPDATE BookCopies SET AvailabilityStatus = 0 WHERE ...
 ```
+
+## Full Real Example
+Test Scripts for Database Verification
+Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
+
+```sql
+-- Example to insert a user and Generate his own LibraryCard
+BEGIN TRANSACTION; -- Start a transaction
+
+-- Insert a new User
+INSERT INTO Users (UserName, Phone, Email, Address)
+VALUES ('Mahmoud Mohamed', '01019060452', 'Mahmoud@example.com', '123 Main St');
+
+-- Get the UserId of the newly inserted User
+DECLARE @NewUserId INT;
+SELECT @NewUserId = SCOPE_IDENTITY();
+
+-- Insert a new LibraryCard with the corresponding UserId
+INSERT INTO LibraryCards (UserID, EndDate)
+VALUES (@NewUserId, DATEADD(YEAR, 1, GETDATE())); -- Assuming a 1-year subscription
+
+COMMIT; -- Commit the transaction if both inserts are successful
+```
+Example to insert an Author
+```sql
+INSERT INTO Authors (Name, DateOfBirth)
+VALUES ('Taha Hussein', '1889-11-14');
+```
+
+
+Example to insert a Book
+```sql
+INSERT INTO Books (Title, ISBN, PublicationDate, Genre, AdditionalDetails)
+VALUES ('The Days', '978-1-123456-00-0', '2023-01-01', 'Autobiography', 'An autobiography of a famous author.');
+
+-- Link the Author to the Book in AuthorsBooks table
+DECLARE @NewAuthorId INT, @NewBookId INT;
+SELECT @NewAuthorId = (SELECT ID FROM Authors WHERE Name = 'Taha Hussein'); -- Get the Author ID
+SELECT @NewBookId = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
+
+INSERT INTO AuthorsBooks (AuthorID, BookID)
+VALUES (@NewAuthorId, @NewBookId);
+```
+
+ Insert a new Book Copy and link it to the Book
+```sql
+DECLARE @NewBookId INT;
+SELECT @NewBookId = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
+INSERT INTO BookCopies (BookID, AvailabilityStatus)
+VALUES (@NewBookId, 1); -- Assuming the initial availability status is 1 (available)
+```
+
+```sql
+-- Insert another Book Copy of exist Book and link it to the Book
+DECLARE @NewBookId INT;
+SELECT @NewBookId = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
+INSERT INTO BookCopies (BookID, AvailabilityStatus)
+VALUES (@NewBookId, 1); -- Assuming the initial availability status is 1 (available)
+```
+
+Example to perform a Borrowing transaction
+```sql
+-- Assuming you have a LibraryCard for the user and a BookCopy available
+-- You need to have the LibraryCardID and BookCopyID to execute this
+DECLARE @UserId INT, @LibraryCardID INT, @BookCopyID INT;
+SELECT @UserId = (SELECT Users.UserID FROM Users WHERE Users.UserName = 'Mahmoud Mohamed'); -- Get the User ID
+SELECT @LibraryCardID = (SELECT CardID FROM LibraryCards WHERE UserID = @UserId);
+SELECT @BookCopyID = (SELECT Top 1 CopyID FROM BookCopies WHERE AvailabilityStatus = 1);
+
+-- Perform the Borrowing transaction
+BEGIN TRANSACTION;
+
+-- Insert the record into BorrowingRecords
+INSERT INTO BorrowingRecords (UserID, CopyID, BorrowingDate, DueDate)
+VALUES (@UserId, @BookCopyID, GETDATE(), DATEADD(DAY, 7, GETDATE())); -- Assuming 7-day borrowing period
+
+-- Update the BookCopy's availability status to checked out (0 means checked out)
+UPDATE BookCopies
+SET AvailabilityStatus = 0
+WHERE CopyID = @BookCopyID;
+
+COMMIT; -- Commit the transaction if both inserts are successful
+```
+
+Feel free to customize and extend the database schema to meet your specific requirements.
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
