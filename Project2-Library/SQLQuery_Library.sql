@@ -1,4 +1,4 @@
-﻿
+
 use master;
 
 create database DT_Library;
@@ -8,9 +8,9 @@ USE DT_Library;
 -- Create the Users table for storing User details
 CREATE TABLE Users (
     UserID int identity(1,1) primary key,
-	UserName NVARCHAR(50) UNIQUE not null,
-	Phone char(11) check(isNumeric(phone) = 1),
-	Email NVARCHAR(100) CHECK (
+    UserName NVARCHAR(50) UNIQUE not null,
+    Phone char(11) check(isNumeric(phone) = 1),
+    Email NVARCHAR(100) CHECK (
     Email LIKE '%@%' -- Check if it contains the "@" symbol
     AND Email LIKE '%.%' -- Check if it contains a dot (.) for the domain
     AND Email NOT LIKE '%@%@%' -- Ensure there's only one "@" symbol
@@ -26,9 +26,9 @@ Address nvarchar(200)
 -- Create the LibraryCards table for storing Library Card details
 CREATE TABLE LibraryCards (
     CardID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT NOT NULL, -- Foreign key reference to Users
+    UserID INT UNIQUE NOT NULL, -- Foreign key reference to Users
     StartDate DATE NOT NULL Default GETDATE(), -- Start date of the library card
-    EndDate DATE NOT NULL Default DATEADD(YEAR, 1, GETDATE()), -- End date is one year from the start date
+    EndDate AS DATEADD(YEAR, 1, StartDate) PERSISTED, -- End date is one year from the start date
     CONSTRAINT FK_LibraryCards_UserID FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
@@ -56,8 +56,13 @@ CREATE TABLE AuthorsBooks (
     AuthorID int not null,
     BookID int not null,
     CONSTRAINT FK_AuthorsBooks_AuthorID FOREIGN KEY (AuthorID) REFERENCES Authors(ID),
-    CONSTRAINT FK_AuthorsBooks_BookID FOREIGN KEY (BookID) REFERENCES Books(ID)
+    CONSTRAINT FK_AuthorsBooks_BookID FOREIGN KEY (BookID) REFERENCES Books(ID),
+    CONSTRAINT UC_AuthorsBooks_AuthorID_BookID UNIQUE (AuthorID, BookID)
+	-- 'UC_AuthorsBooks_AuthorID_BookID' is added, which ensures 
+	-- that combinations of 'AuthorID' and 'BookID' must be unique in the 'AuthorsBooks' table. 
+	-- This constraint ensures that you cannot have duplicate pairs of 'AuthorID' and 'BookID' in the table.
 );
+
 
 -- Create the BookCopies table for storing BookCopies details
 CREATE TABLE BookCopies (
@@ -100,6 +105,13 @@ CREATE TABLE Fines (
     PaymentStatus bit,
     CONSTRAINT FK_Fines_UserID FOREIGN KEY (UserID) REFERENCES Users(UserID),
     CONSTRAINT FK_Fines_BorrowingRecordID FOREIGN KEY (BorrowingRecordID) REFERENCES BorrowingRecords(BorrowingRecordID)
+);
+
+
+CREATE TABLE LibrarySettings (
+    SettingID int identity(1,1) primary key,
+    DefaultBorrowDurationDays tinyint not null,
+    DefaultFinePerDay decimal(5, 2) not null
 );
 
 
