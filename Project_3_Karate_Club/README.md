@@ -277,6 +277,61 @@ VALUES (@MemberID, @RankID, Null, @instructor, @PaymentID);
 COMMIT; -- Commit the transaction if all inserts are successful
 ```
 
+## Remember That is the Best Practice To use error handling It will help ensure the reliability and maintainability of The scripts
+
+```sql
+BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- Get The Member
+    DECLARE @MemberID INT;
+    SELECT @MemberID = Members.MemberID
+    FROM Members
+    JOIN Persons ON Persons.PersonId = Members.PersonId
+    WHERE Persons.Name = 'Mahmoud Mohamed';
+
+    -- Get The Rank
+    DECLARE @RankID INT;
+    SELECT @RankID = BeltRanks.RankID
+    FROM BeltRanks
+    WHERE BeltRanks.RankName = 'Black Belt (1st Dan)';
+
+    -- Get the instructor's ID
+    DECLARE @instructor INT;
+    SELECT @instructor = Instructors.InstructorID
+    FROM Instructors
+    JOIN Persons ON Persons.PersonId = Instructors.PersonId
+    WHERE Persons.Name = 'Ali Emad';
+
+    -- Get the payment amount for the belt test
+    DECLARE @PaymentAmount DECIMAL;
+    SELECT @PaymentAmount = TestFees
+    FROM BeltRanks
+    WHERE BeltRanks.RankID = @RankID;
+
+    -- Insert a new Payment record
+    DECLARE @PaymentID INT;
+    INSERT INTO Payments (Amount, Date, MemberID)
+    VALUES (@PaymentAmount, GETDATE(), @MemberID);
+
+    -- Get the PaymentID of the newly inserted Payment
+    SELECT @PaymentID = SCOPE_IDENTITY();
+
+    -- Insert a new Belt Test record
+    INSERT INTO BeltTests (MemberID, RankID, Result, TestedByInstructorID, PaymentID)
+    VALUES (@MemberID, @RankID, NULL, @instructor, @PaymentID);
+
+    COMMIT; -- Commit the transaction if all inserts are successful
+END TRY
+BEGIN CATCH
+    -- Handle any errors here, you can log them or perform other actions
+    ROLLBACK; -- Rollback the transaction to maintain data consistency
+    -- Rethrow the error or perform additional error handling as needed
+END CATCH;
+
+```
+
+
 - Feel free to customize and extend the database schema to meet your specific requirements.
 
 ## Author
