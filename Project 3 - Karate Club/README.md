@@ -2,7 +2,7 @@
 
 The Karate Club database is designed to manage information about the club's members, instructors, belt ranks, payments, and belt tests. It includes several tables that store relevant data and relationships between them. Below is a description of the tables and some sample scripts for database verification.
 
-## ![Relational Schema](Relational Schema Karate Club (2).png)
+## ![Relational Schema](Relational_Schema_Karate_Club_.png)
 
 ## Tables
 
