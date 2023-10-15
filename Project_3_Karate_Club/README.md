@@ -97,7 +97,7 @@ The `BeltTests` table stores details about belt tests.
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/mattar740/DataBase/Project3_KarateClub.git
+   git clone https://github.com/mattar740/DataBase/Project_3_Karate_Club.git
    ```
 2. Create a SQL Server database and execute the schema.sql script to create the necessary tables and constraints.
 
