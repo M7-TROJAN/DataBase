@@ -14,14 +14,16 @@ CREATE TABLE Persons (
     Email NVARCHAR(200) CHECK (Email LIKE '%@%'), -- Basic email format check
     Address NVARCHAR(200),
     CONSTRAINT UC_Name UNIQUE (Name), -- Ensure Name is unique
+    -- Ensure that each record has valid contact information (either a non-null phone or email)
+    CONSTRAINT CHK_ContactInformation CHECK ((Phone IS NOT NULL) OR (Email IS NOT NULL))
 );
 
 
 -- Create the Instructors table for storing Instructor details
 CREATE TABLE Instructors (
 	InstructorID INT IDENTITY(1, 1) PRIMARY KEY,
-    PersonId INT UNIQUE, -- Foreign key reference to Persons table's PersonId.
-    Qualifications NVARCHAR(200), -- Person's name
+    PersonId INT UNIQUE NOT NULL, -- Foreign key reference to Persons table's PersonId.
+    Qualifications NVARCHAR(200), -- Instructor's Qualifications
 	CONSTRAINT FK_Instructor_Person FOREIGN KEY (PersonId) REFERENCES Persons(PersonId)
 );
 
@@ -29,7 +31,7 @@ CREATE TABLE Instructors (
 -- Create the BeltRanks table for storing BeltRank details
 CREATE TABLE BeltRanks (
     RankID INT PRIMARY KEY,
-    RankName NVARCHAR(200) NOT NULL,
+    RankName NVARCHAR(200) UNIQUE NOT NULL,
     TestFees SMALLMONEY NOT NULL,
     BeltRankDescription NVARCHAR(MAX) -- Additional information about the belt rank.
 );
@@ -60,9 +62,9 @@ VALUES
 -- Create the Members table for storing Member details
 CREATE TABLE Members (
 	MemberID INT IDENTITY(1, 1) PRIMARY KEY,
-    PersonId INT UNIQUE, -- Foreign key reference to Persons table's PersonId.
+    PersonId INT UNIQUE NOT NULL, -- Foreign key reference to Persons table's PersonId.
     LastBeltRank INT, -- Foreign key reference to BeltRanks table's RankID.
-	IsActive Bit not null,
+	IsActive Bit NOT NULL,
 	CONSTRAINT FK_Member_Person FOREIGN KEY (PersonId) REFERENCES Persons(PersonId),
 	CONSTRAINT FK_Member_BeltRank FOREIGN KEY (LastBeltRank) REFERENCES BeltRanks(RankID)
 );
