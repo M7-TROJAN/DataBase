@@ -139,8 +139,9 @@ To perform a borrowing transaction, use the following script:
 ```
 
 ## Full Real Example
-Test Scripts for Database Verification
-Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
+- Test Scripts for Database Verification
+- Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
+
 
 - Example to insert a user and Generate his own LibraryCard
 ```sql
