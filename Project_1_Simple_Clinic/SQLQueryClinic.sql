@@ -12,8 +12,8 @@ CREATE TABLE Persons (
     Email NVARCHAR(200) CHECK (Email LIKE '%@%'), -- Basic email format check
     Address NVARCHAR(200),
     CONSTRAINT UC_Name UNIQUE (Name), -- Ensure Name is unique
-	-- Ensure that each record has valid contact information (either a non-null phone or email)
-	CONSTRAINT CHK_ContactInformation CHECK ((Phone IS NOT NULL) OR (Email IS NOT NULL))
+    -- Ensure that each record has valid contact information (either a non-null phone or email)
+    CONSTRAINT CHK_ContactInformation CHECK ((Phone IS NOT NULL) OR (Email IS NOT NULL))
 );
 
 -- Create the Doctors table with a foreign key constraint to Persons
