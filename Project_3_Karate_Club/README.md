@@ -162,7 +162,7 @@ To insert a belt test record, use the following script:
 -- INSERT INTO BeltTests (MemberID, RankID, Result, TestedByInstructorID, PaymentID) VALUES ...
 ```
 
-## Full Real Example
+## Full Real Examples
 Test Scripts for Database Verification
 Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
 
@@ -276,6 +276,56 @@ SELECT @PaymentID = SCOPE_IDENTITY();
 INSERT INTO BeltTests (MemberID, RankID, Result, TestedByInstructorID, PaymentID)
 VALUES (@MemberID, @RankID, Null, @instructor, @PaymentID);
 COMMIT; -- Commit the transaction if all inserts are successful
+```
+
+- Example: Triggers for Preventing Conflicting Roles
+
+```sql
+-- Create a trigger to prevent a person from being both an instructor and a member
+CREATE TRIGGER PreventMemberAsInstructor
+ON Instructors
+FOR INSERT
+AS
+BEGIN
+    -- Check if there is an overlap between the inserted records and existing members
+    IF EXISTS (
+        SELECT 1
+        FROM inserted AS i
+        WHERE EXISTS (
+            SELECT 1
+            FROM Members AS m
+            WHERE m.PersonId = i.PersonId
+        )
+    )
+    BEGIN
+        -- Raise an error and roll back the specific INSERT if a person is both an instructor and a member
+        THROW 50000, 'A person cannot be both an instructor and a member.', 1;
+        ROLLBACK; -- Roll back the specific INSERT
+    END;
+END;
+
+-- Create a trigger to prevent an instructor from being a member
+CREATE TRIGGER PreventInstructorAsMember
+ON Members
+FOR INSERT
+AS
+BEGIN
+    -- Check if there is an overlap between the inserted records and existing instructors
+    IF EXISTS (
+        SELECT 1
+        FROM inserted AS i
+        WHERE EXISTS (
+            SELECT 1
+            FROM Instructors AS ins
+            WHERE ins.PersonId = i.PersonId
+        )
+    )
+    BEGIN
+        -- Raise an error and roll back the specific INSERT if an instructor is also a member
+        THROW 50000, 'An instructor cannot be a member.', 1;
+        ROLLBACK; -- Roll back the specific INSERT
+    END;
+END;
 ```
 
 ### Creating a View for Members
