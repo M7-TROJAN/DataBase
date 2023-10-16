@@ -19,6 +19,7 @@ The `Persons` table stores details about club members and instructors.
 - `Address`: Address.
 - Constraints:
   - `Name` is unique.
+  - 'CHK_ContactInformation' Is A CONSTRAINT Ensure that each record has valid contact information (either a non-null phone or email)
 
 ### Instructors
 
