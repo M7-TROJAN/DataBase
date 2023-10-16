@@ -142,8 +142,9 @@ To perform a borrowing transaction, use the following script:
 Test Scripts for Database Verification
 Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
 
+- Example to insert a user and Generate his own LibraryCard
 ```sql
--- Example to insert a user and Generate his own LibraryCard
+
 BEGIN TRANSACTION; -- Start a transaction
 
 -- Insert a new User
@@ -187,12 +188,10 @@ DECLARE @NewBookId INT;
 SELECT @NewBookId = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
 INSERT INTO BookCopies (BookID, AvailabilityStatus)
 VALUES (@NewBookId, 1); -- Assuming the initial availability status is 1 (available)
-```
 
-```sql
--- Insert another Book Copy of exist Book and link it to the Book
-DECLARE @NewBookId INT;
-SELECT @NewBookId = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
+-- Insert another Book Copy of the existing Book and link it to the Book
+DECLARE @NewBookId2 INT;
+SELECT @NewBookId2 = (SELECT ID FROM Books WHERE Title = 'The Days'); -- Get the Book ID
 INSERT INTO BookCopies (BookID, AvailabilityStatus)
 VALUES (@NewBookId, 1); -- Assuming the initial availability status is 1 (available)
 ```
@@ -200,10 +199,8 @@ VALUES (@NewBookId, 1); -- Assuming the initial availability status is 1 (availa
 - Example to perform a Borrowing transaction
 ```sql
 -- Assuming you have a LibraryCard for the user and a BookCopy available
--- You need to have the LibraryCardID and BookCopyID to execute this
 DECLARE @UserId INT, @LibraryCardID INT, @BookCopyID INT;
 SELECT @UserId = (SELECT Users.UserID FROM Users WHERE Users.UserName = 'Mahmoud Mohamed'); -- Get the User ID
-SELECT @LibraryCardID = (SELECT CardID FROM LibraryCards WHERE UserID = @UserId);
 SELECT @BookCopyID = (SELECT Top 1 CopyID FROM BookCopies WHERE AvailabilityStatus = 1);
 
 -- Perform the Borrowing transaction
@@ -219,6 +216,31 @@ SET AvailabilityStatus = 0
 WHERE CopyID = @BookCopyID;
 
 COMMIT; -- Commit the transaction if both inserts are successful
+```
+
+- Example: Performing a Book Reservation Transaction
+```sql
+BEGIN TRANSACTION; -- Begin a transaction
+
+-- Assume the user named 'Magdy Khaled' wants to reserve a copy of the book 'The Mystery Of Death' while it's available
+
+-- Get the User ID for 'Magdy Khaled'
+DECLARE @UserId INT;
+SELECT @UserId = (SELECT Users.UserID FROM Users WHERE Users.UserName = 'Magdy Khaled');
+
+-- Get the Book ID for 'The Mystery Of Death'
+DECLARE @BookID INT;
+SELECT @BookID = (SELECT Books.ID FROM Books WHERE Books.Title = 'The Mystery Of Deth');
+
+-- Get the Copy ID of the available book copy
+DECLARE @BookCopyID INT;
+SELECT @BookCopyID = (SELECT TOP 1 BookCopies.CopyID FROM BookCopies WHERE BookCopies.BookID = @BookID);
+
+-- Insert a reservation record
+INSERT INTO Reservations (UserID, CopyID, ReservationDate)
+VALUES (@UserId, @BookCopyID, GETDATE());
+
+COMMIT; -- Commit the transaction if the insert is successful
 ```
 
 - Feel free to customize and extend the database schema to meet your specific requirements.
