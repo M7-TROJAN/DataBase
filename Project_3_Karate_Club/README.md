@@ -277,6 +277,44 @@ VALUES (@MemberID, @RankID, Null, @instructor, @PaymentID);
 COMMIT; -- Commit the transaction if all inserts are successful
 ```
 
+### Creating a View for Members
+
+To create a view for members with additional details, use the following script:
+```sql
+-- Create a view that combines member details and subscription information
+-- Create a view named V_Members
+CREATE VIEW V_Members AS (
+    SELECT 
+        Members.MemberID,
+        MemberName = Persons.Name,
+        Age = DATEDIFF(YEAR, Persons.DateOfBirth, GETDATE()),
+        Gender = CASE 
+            WHEN Persons.Gender = 'M' THEN 'Male'
+            WHEN Persons.Gender = 'F' THEN 'Female'
+            ELSE 'Unknown'
+        END,
+        Email = Persons.Email,
+        Phone = Persons.Phone,
+        Address = Persons.Address,
+        BeltRank = BeltRanks.RankName,
+        MembershipStatus = CASE
+            WHEN Members.IsActive = 1 THEN 'Active'
+            WHEN Members.IsActive = 0 THEN 'Not Active'
+            ELSE 'Unknown'
+        END,
+        SubscriptionStartDate = SubscriptionPeriods.StartDate,
+        SubscriptionEndDate = SubscriptionPeriods.EndDate
+    FROM Members
+    JOIN Persons ON Persons.PersonId = Members.PersonId
+    JOIN BeltRanks ON BeltRanks.RankID = Members.LastBeltRank
+    JOIN SubscriptionPeriods ON SubscriptionPeriods.MemberID = Members.MemberID
+);
+
+-- Retrieve data from the V_Members view
+SELECT * FROM V_Members;
+
+```
+
 ## Remember That is the Best Practice To use error handling It will help ensure the reliability and maintainability of The scripts
 
 ```sql
