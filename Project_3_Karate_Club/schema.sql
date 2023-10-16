@@ -119,3 +119,50 @@ CREATE TABLE BeltTests (
     CONSTRAINT FK_BeltTests_Instructor FOREIGN KEY (TestedByInstructorID) REFERENCES Instructors(InstructorID),
     CONSTRAINT FK_BeltTests_Payment FOREIGN KEY (PaymentID) REFERENCES Payments(PaymentID)
 );
+
+
+-- Create a trigger to prevent a person from being both an instructor and a member
+CREATE TRIGGER PreventMemberAsInstructor
+ON Instructors
+FOR INSERT
+AS
+BEGIN
+    -- Check if there is an overlap between the inserted records and existing members
+    IF EXISTS (
+        SELECT 1
+        FROM inserted AS i
+        WHERE EXISTS (
+            SELECT 1
+            FROM Members AS m
+            WHERE m.PersonId = i.PersonId
+        )
+    )
+    BEGIN
+        -- Raise an error and roll back the specific INSERT if a person is both an instructor and a member
+        THROW 50000, 'A person cannot be both an instructor and a member.', 1;
+        ROLLBACK; -- Roll back the specific INSERT
+    END;
+END;
+
+-- Create a trigger to prevent an instructor from being a member
+CREATE TRIGGER PreventInstructorAsMember
+ON Members
+FOR INSERT
+AS
+BEGIN
+    -- Check if there is an overlap between the inserted records and existing instructors
+    IF EXISTS (
+        SELECT 1
+        FROM inserted AS i
+        WHERE EXISTS (
+            SELECT 1
+            FROM Instructors AS ins
+            WHERE ins.PersonId = i.PersonId
+        )
+    )
+    BEGIN
+        -- Raise an error and roll back the specific INSERT if an instructor is also a member
+        THROW 50000, 'An instructor cannot be a member.', 1;
+        ROLLBACK; -- Roll back the specific INSERT
+    END;
+END;
