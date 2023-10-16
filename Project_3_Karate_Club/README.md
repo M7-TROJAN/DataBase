@@ -26,7 +26,7 @@ The `Persons` table stores details about club members and instructors.
 The `Instructors` table stores details about the club's instructors.
 
 - `InstructorID` (Primary Key): Unique identifier for instructors.
-- `PersonId` (Foreign Key): Reference to the person associated with the instructor.
+- `PersonId` (Foreign Key): Reference to the person associated with the instructor it's a Unique Column To Prevent Duplicate Data.
 - `Qualifications`: Instructor's qualifications.
 
 ### BeltRanks
