@@ -138,9 +138,9 @@ To perform a borrowing transaction, use the following script:
 -- UPDATE BookCopies SET AvailabilityStatus = 0 WHERE ...
 ```
 
-## Full Real Example
-- Test Scripts for Database Verification
-- Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
+### Full Real Example
+## Test Scripts for Database Verification
+## Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
 
 
 - Example to insert a user and Generate his own LibraryCard
