@@ -21,6 +21,9 @@ The Car Rental Management System serves as a learning tool, allowing me to pract
 
 ![Relational Schema](Relational_Schema_Rental_Car_.png)
 
+- You can view the [DrawSQL diagram here](https://drawsql.app/teams/m7/diagrams/car-rental).
+
+
 ## Project Structure
 
 The project repository contains the following files:
