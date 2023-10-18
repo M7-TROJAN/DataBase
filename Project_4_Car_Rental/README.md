@@ -13,7 +13,7 @@ The Car Rental Management System serves as a learning tool, allowing me to pract
 2. [Project Structure](#project-structure)
 3. [Database Schema](#database-schema)
 4. [Usage](#usage)
-5. [Sample Scripts](#Usage_Examples)
+5. [Sample Scripts](#Usage-Examples)
 6. [License](#license)
 7. [Author](#Author)
 
