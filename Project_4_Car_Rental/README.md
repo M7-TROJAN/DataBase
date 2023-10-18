@@ -8,6 +8,14 @@ Hello, I am Mahmoud, a CS student. This project has been created with the primar
 
 The Car Rental Management System serves as a learning tool, allowing me to practice and implement the database design principles I've studied. I can use this system to gain a deeper understanding of how databases work in real-world scenarios, enhancing my knowledge and skills in the field of database management.
 
+## Table of Contents
+1. [Relational Schema](#relational-schema)
+2. [Project Structure](#project-structure)
+3. [Database Schema](#database-schema)
+4. [Usage](#usage)
+5. [Sample Scripts](#Usage_Examples)
+6. [License](#license)
+7. [Author](#Author)
 
 ## Relational Schema
 
@@ -47,8 +55,13 @@ The database schema is defined in the `schema.sql` file.
 
 4. Ensure to update and customize the scripts for your specific use case, including real customer data, vehicle details, and booking information.
 
-## Sample Script
-### Inserting a New Customer and Booking a Rental
+
+## Usage Examples
+
+**Booking a Rental**:
+
+Suppose you want to book a rental for a customer. You can use the following SQL script as an example:
+
 ```sql
 -- To insert a new customer and book a rental, use the following script:
 -- Insert a new Customer
@@ -64,7 +77,7 @@ The database schema is defined in the `schema.sql` file.
 
 ## Full Real Examples
 Test Scripts for Database Verification
-Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
+*Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro*
 
 - Example to insert fuel types
 ```SQL
@@ -323,5 +336,6 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 - Mahmoud Mohamed
 - Email: mahmoud.abdalaziz@outlook.com
 - LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+- GitHub: [mattar740](https://github.com/mattar740)
 
 Have a great time Happy learning and coding! 🚀
