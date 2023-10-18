@@ -306,12 +306,15 @@ BEGIN
 END;
 ```
 
-## Contributing
-
-If you want to contribute to this project, feel free to submit pull requests or open issues.
+- Feel free to customize and extend the database schema to meet your specific requirements.
 
 ## License
-
 This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this code as per the license terms.
 
-Have a great time managing your car rental business with this system!
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Have a great time Happy learning and coding! 🚀
