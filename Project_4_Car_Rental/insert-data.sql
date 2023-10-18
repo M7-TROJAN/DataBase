@@ -1,5 +1,8 @@
-Use Car_Rental;
+-- Test Scripts for Database Verification Important 
+-- Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
 
+
+Use Car_Rental;
 
 -- Insert sample fuel types into the FuelTypes table
 INSERT INTO FuelTypes (ID, FuelType) VALUES
@@ -8,6 +11,7 @@ INSERT INTO FuelTypes (ID, FuelType) VALUES
 (3, 'Electric'),
 (4, 'Hybrid');
 
+---------------------------------------------------------------------------------------------------------------------
 
 -- Insert sample vehicle categories into the VehiclesCategory table
 INSERT INTO VehiclesCategory (CategoryName) VALUES
@@ -17,6 +21,7 @@ INSERT INTO VehiclesCategory (CategoryName) VALUES
 ('Sports Car'),
 ('Minivan');
 
+---------------------------------------------------------------------------------------------------------------------
 
 
 -- Insert Vehicles
@@ -39,6 +44,7 @@ SELECT @CarCategoryID = CategoryID FROM VehiclesCategory WHERE CategoryName LIKE
 INSERT INTO Vehicles (Make, Model, Year, Mileage, FuelTypeID, PlateNumber, CarCategoryID, RentalPricePerDay, ISAvilableForRent)
 VALUES ('Honda', 'Civic', '2020-01-01', 8000, @FuelTypeID, 'XYZ789', @CarCategoryID, 45.00, 1);
 
+---------------------------------------------------------------------------------------------------------------------
 
 
 -- Example to insert customers
@@ -51,6 +57,7 @@ VALUES ('Mahmoud Mohamed', '29803031401528', '56789012345678', '01019760452');
 INSERT INTO Customers (CustomerName, National_ID_Number, Driver_License_Number, Phone)
 VALUES ('Mohamed Salah', '30003031491528', '43210987654321', '01129416608');
 
+---------------------------------------------------------------------------------------------------------------------
 
 
 -- Example to insert a booking record
@@ -114,6 +121,7 @@ BEGIN
     PRINT 'Transaction rolled back due to an error.';
 END;
 
+---------------------------------------------------------------------------------------------------------------------
 
 
 
