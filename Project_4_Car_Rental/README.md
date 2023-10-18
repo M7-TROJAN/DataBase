@@ -1,6 +1,13 @@
 # Car Rental Management System
 
-Welcome to the Car Rental Management System project! This system allows you to manage your car rental business efficiently.
+ Welcome to the Car Rental Management System, a comprehensive database designed to streamline the operations of your car rental business efficiently.
+
+## Project Purpose
+
+Hello, I am Mahmoud, a CS student. This project has been created with the primary goal of providing me with a hands-on learning experience in database management. While the system's capabilities are well-suited for a car rental business, please note that the primary objective here is educational, and it is not intended for commercial use.
+
+The Car Rental Management System serves as a learning tool, allowing me to practice and implement the database design principles I've studied. I can use this system to gain a deeper understanding of how databases work in real-world scenarios, enhancing my knowledge and skills in the field of database management.
+
 
 ## Relational Schema
 
