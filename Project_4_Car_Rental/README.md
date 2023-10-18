@@ -304,12 +304,12 @@ IF @@ERROR = 0
 BEGIN
     -- If successful, commit the transaction
 
-	-- Note: Don't Forget To Update 'mileage' Vehicles Column To The New Mileage '@Mileage'
-	UPDATE Vehicles
+    -- Note: Don't Forget To Update 'mileage' Vehicles Column To The New Mileage '@Mileage'
+    UPDATE Vehicles
     SET mileage = @Mileage
     WHERE VehicleID = @VehicleID;
 
-	-- Note: Set 'ISAvilableForRent' in the Vehicles table to 1 if the FinalCheckNotes indicate that the vehicle is in good condition
+    -- Note: Set 'ISAvilableForRent' in the Vehicles table to 1 if the FinalCheckNotes indicate that the vehicle is in good condition
     -- (Assuming '0' represents a problem with the car)
     IF @FinalCheckNotes <> '0'
     BEGIN
