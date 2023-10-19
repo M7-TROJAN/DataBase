@@ -37,7 +37,7 @@ CREATE TABLE Vehicles (
 	Year Date NOT NULL,
 	mileage INT NOT NULL CHECK(mileage >= 0),
 	FuelTypeID INT NOT NULL, -- Foreign key reference to the FuelTypes table's ID.
-	PlateNumber NVARCHAR(11) NOT NULL, 
+	PlateNumber NVARCHAR(11) UNIQUE NOT NULL, 
 	CarCategoryID INT NOT NULL, -- Foreign key reference to the VehiclesCategory table's CategoryID.
 	RentalPricePerDay SMALLMONEY NOT NULL,
 	ISAvilableForRent BIT NOT NULL
@@ -52,7 +52,7 @@ CREATE TABLE Maintenance (
     VehicleID INT NOT NULL, -- Foreign key referencing the Vehicles table's VehicleID.
     MaintenanceDescription NVARCHAR(300) NOT NULL,
     MaintenanceDate DATE NOT NULL DEFAULT GETDATE(),
-    MaintenanceCost DECIMAL(10, 2), -- Adjusted data type with precision and scale
+    MaintenanceCost DECIMAL(10, 2) NOT NULL,
     CONSTRAINT FK_Maintenance_VehicleID FOREIGN KEY (VehicleID) REFERENCES Vehicles(VehicleID)
 );
 
@@ -82,7 +82,7 @@ CREATE TABLE RentalBooking (
 CREATE TABLE VehicleReturns (
     ReturnID INT IDENTITY(1, 1) PRIMARY KEY,
     BookingID INT UNIQUE NOT NULL, -- Foreign key reference to the RentalBooking table's BookingID.
-    ActualReturnDate DATETIME NOT NULL,
+    ActualReturnDate DATETIME NOT NULL DEFAULT GETDATE(),
     ActualRentalDays TINYINT NOT NULL,
     Mileage SMALLINT NOT NULL,
     ConsumedMileage SMALLINT NOT NULL, -- الأميال المستهلكة The additional mileage driven during the rental period, calculated as the difference between the current mileage and the vehicle's mileage at the start of the rental.
