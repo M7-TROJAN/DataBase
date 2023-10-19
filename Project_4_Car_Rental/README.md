@@ -14,8 +14,9 @@ The Car Rental Management System serves as a learning tool, allowing me to pract
 3. [Database Schema](#database-schema)
 4. [Usage](#usage)
 5. [Sample Scripts](#Usage-Examples)
-6. [License](#license)
-7. [Author](#Author)
+6. [Full Real Examples](#Full-Real-Examples)
+7. [License](#license)
+8. [Author](#Author)
 
 ## Relational Schema
 
