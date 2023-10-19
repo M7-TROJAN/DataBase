@@ -329,6 +329,29 @@ BEGIN
 END;
 ```
 
+- Example to insert a Maintenance record
+```sql
+-- Maintenance for Vehicle 1
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (11, 'Oil Change', 50.00);
+
+-- Maintenance for Vehicle 2
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (12, 'Brake Inspection', 75.00);
+
+-- Maintenance for Vehicle 1
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (13, 'Tire Rotation', 30.00);
+
+-- Maintenance for Vehicle 3
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (14, 'Air Filter Replacement', 20.00);
+
+-- Maintenance for Vehicle 2
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (15, 'Coolant Flush', 60.00);
+```
+
 - Feel free to customize and extend the database schema to meet your specific requirements.
 
 ## License
