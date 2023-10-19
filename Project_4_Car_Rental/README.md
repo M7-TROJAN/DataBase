@@ -206,7 +206,6 @@ END;
 - Example for Inserting a Record into VehicleReturns table and RentalTransaction table
 
 ```sql
-
 -- Start a transaction
 BEGIN TRANSACTION;
 
@@ -251,7 +250,7 @@ DECLARE @VehicleID INT;
 
 -- Retrieve the VehicleID associated with the @BookingID from the RentalBooking table, 
 -- which we will use to fetch the 'RentalPricePerDay' from the Vehicles table.
-SELECT @VehicleID = (SELECT VehicleID FROM RentalBooking WHERE VehicleID = @BookingID)
+SELECT @VehicleID = (SELECT VehicleID FROM RentalBooking WHERE BookingID = @BookingID)
 PRINT @VehicleID
 
 -- Calculate the actual total due amount, taking into account the rental duration and any additional charges.
@@ -275,6 +274,10 @@ VALUES (
 DECLARE @ReturnID INT;
 SELECT @ReturnID = SCOPE_IDENTITY();
 
+-- Retrieve the InitialTotalDueAmount From The RentalBooking Table
+DECLARE @PaidInitialTotalDueAmount SMALLMONEY;
+SELECT @PaidInitialTotalDueAmount = (SELECT InitialTotalDueAmount FROM RentalBooking WHERE BookingID = @BookingID);
+
 -- Insert the corresponding record into the RentalTransaction table
 INSERT INTO RentalTransaction (
 	BookingID, ReturnID, PaymentDetails, PaidInitialTotalDueAmount, ActualTotalDueAmount, 
@@ -287,12 +290,12 @@ VALUES (
 	@ActualTotalDueAmount, 
 	---- Calculate TotalRemaining
 	CASE
-		WHEN @ActualTotalDueAmount > 100.00 THEN @ActualTotalDueAmount - 100.00
+		WHEN @ActualTotalDueAmount > @PaidInitialTotalDueAmount THEN @ActualTotalDueAmount - @PaidInitialTotalDueAmount
 		ELSE 0.00  -- Ensure that TotalRemaining is not negative
 	END,
 	-- Calculate TotalRefundedAmount
 	CASE
-		WHEN 100.00 > @ActualTotalDueAmount THEN 100.00 - @ActualTotalDueAmount
+		WHEN @PaidInitialTotalDueAmount > @ActualTotalDueAmount THEN @PaidInitialTotalDueAmount - @ActualTotalDueAmount
 		ELSE 0.00  -- Ensure that TotalRefundedAmount is not negative
 	END,
 	GETDATE(), 
