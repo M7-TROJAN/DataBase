@@ -70,18 +70,18 @@ CREATE TABLE RentalBooking (
     InitialTotalDueAmount AS (RentalDurationDays * RentalPricePerDay), --  this Computed Column will Calculate it Based on RentalPricePerDay Column and RentalDurationDays Column
     InitialCheckNotes NVARCHAR(500) NOT NULL,
 
-	CONSTRAINT FK_Booking_CustomerID FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-	CONSTRAINT FK_Booking_VehicleID FOREIGN KEY (VehicleID) REFERENCES Vehicles(VehicleID)
+    CONSTRAINT FK_Booking_CustomerID FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    CONSTRAINT FK_Booking_VehicleID FOREIGN KEY (VehicleID) REFERENCES Vehicles(VehicleID)
 	
-	-- RentalPricePerDay -> سعر الإيجار في اليوم الواحد
-	-- InitialTotalDueAmount -> إجمالي المبلغ المستحق الأولي
-	-- InitialCheckNotes -> ملاحظات الفحص الأولي
+    -- RentalPricePerDay -> سعر الإيجار في اليوم الواحد
+    -- InitialTotalDueAmount -> إجمالي المبلغ المستحق الأولي
+    -- InitialCheckNotes -> ملاحظات الفحص الأولي
 );
 
 -- Create the VehicleReturns table for storing vehicle return details
 CREATE TABLE VehicleReturns (
     ReturnID INT IDENTITY(1, 1) PRIMARY KEY,
-	BookingID INT UNIQUE NOT NULL, -- Foreign key reference to the RentalBooking table's BookingID.
+    BookingID INT UNIQUE NOT NULL, -- Foreign key reference to the RentalBooking table's BookingID.
     ActualReturnDate DATETIME NOT NULL,
     ActualRentalDays TINYINT NOT NULL,
     Mileage SMALLINT NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE VehicleReturns (
     FinalCheckNotes NVARCHAR(500),
     AdditionalCharges SMALLMONEY, -- رسوم إضافية
     ActualTotalDueAmount SMALLMONEY, -- إجمالي المبلغ المستحق الفعلي
-	CONSTRAINT FK_VehicleReturns_BookingID FOREIGN KEY (BookingID) REFERENCES RentalBooking(BookingID),
+    CONSTRAINT FK_VehicleReturns_BookingID FOREIGN KEY (BookingID) REFERENCES RentalBooking(BookingID),
 );
 
 -- Create the RentalTransaction table for storing rental transaction details
@@ -106,4 +106,77 @@ CREATE TABLE RentalTransaction (
     UpdatedTransactionDate DATETIME,
     CONSTRAINT FK_RentalTransaction_BookingID FOREIGN KEY (BookingID) REFERENCES RentalBooking(BookingID),
     CONSTRAINT FK_RentalTransaction_ReturnID FOREIGN KEY (ReturnID) REFERENCES VehicleReturns(ReturnID)
+);
+
+
+
+-- CREATE Some Vehicles views (Optional)
+
+-- Create a view to display information about gasoline cars available for rent.
+CREATE VIEW Gasoline_Cars AS (
+    SELECT VehicleID, Make, Year, mileage, 
+           FuelTypes.FuelType AS 'Fuel Type', 
+           PlateNumber AS 'Plate Number', 
+           VehiclesCategory.CategoryName AS 'Car Category', 
+           RentalPricePerDay, 
+           CASE
+               WHEN ISAvilableForRent = 1 THEN 'Available'
+               WHEN ISAvilableForRent = 0 THEN 'Not Available'
+           END AS 'IS Available For Rent'
+    FROM Vehicles
+    JOIN FuelTypes ON FuelTypes.ID = Vehicles.FuelTypeID
+    JOIN VehiclesCategory ON VehiclesCategory.CategoryID = Vehicles.CarCategoryID
+    WHERE FuelTypes.FuelType LIKE '%Gasoline%'
+);
+
+-- Create a view to display information about diesel cars available for rent.
+CREATE VIEW Diesel_Cars AS (
+    SELECT VehicleID, Make, Year, mileage, 
+           FuelTypes.FuelType AS 'Fuel Type', 
+           PlateNumber AS 'Plate Number', 
+           VehiclesCategory.CategoryName AS 'Car Category', 
+           RentalPricePerDay, 
+           CASE
+               WHEN ISAvilableForRent = 1 THEN 'Available'
+               WHEN ISAvilableForRent = 0 THEN 'Not Available'
+           END AS 'IS Available For Rent'
+    FROM Vehicles
+    JOIN FuelTypes ON FuelTypes.ID = Vehicles.FuelTypeID
+    JOIN VehiclesCategory ON VehiclesCategory.CategoryID = Vehicles.CarCategoryID
+    WHERE FuelTypes.FuelType LIKE '%Diesel%'
+);
+
+
+-- Create a view to display information about electric cars available for rent.
+CREATE VIEW Electric_Cars AS (
+    SELECT VehicleID, Make, Year, mileage, 
+           FuelTypes.FuelType AS 'Fuel Type', 
+           PlateNumber AS 'Plate Number', 
+           VehiclesCategory.CategoryName AS 'Car Category', 
+           RentalPricePerDay, 
+           CASE
+               WHEN ISAvilableForRent = 1 THEN 'Available'
+               WHEN ISAvilableForRent = 0 THEN 'Not Available'
+           END AS 'IS Available For Rent'
+    FROM Vehicles
+    JOIN FuelTypes ON FuelTypes.ID = Vehicles.FuelTypeID
+    JOIN VehiclesCategory ON VehiclesCategory.CategoryID = Vehicles.CarCategoryID
+    WHERE FuelTypes.FuelType LIKE '%Electric%'
+);
+
+-- Create a view to display information about hybrid cars available for rent.
+CREATE VIEW Hybrid_Cars AS (
+    SELECT VehicleID, Make, Year, mileage, 
+           FuelTypes.FuelType AS 'Fuel Type', 
+           PlateNumber AS 'Plate Number', 
+           VehiclesCategory.CategoryName AS 'Car Category', 
+           RentalPricePerDay, 
+           CASE
+               WHEN ISAvilableForRent = 1 THEN 'Available'
+               WHEN ISAvilableForRent = 0 THEN 'Not Available'
+           END AS 'IS Available For Rent'
+    FROM Vehicles
+    JOIN FuelTypes ON FuelTypes.ID = Vehicles.FuelTypeID
+    JOIN VehiclesCategory ON VehiclesCategory.CategoryID = Vehicles.CarCategoryID
+    WHERE FuelTypes.FuelType LIKE '%Hybrid%'
 );
