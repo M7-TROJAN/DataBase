@@ -286,7 +286,7 @@ VALUES (
 	@BookingID, 
 	@ReturnID, 
 	'Payment received for initial booking',  -- Provide more specific information about the payment
-	100.00, 
+	@PaidInitialTotalDueAmount, 
 	@ActualTotalDueAmount, 
 	---- Calculate TotalRemaining
 	CASE
