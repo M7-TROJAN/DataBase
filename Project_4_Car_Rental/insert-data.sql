@@ -248,3 +248,45 @@ BEGIN
     ROLLBACK;
     PRINT 'Transaction rolled back due to an error.';
 END;
+
+---------------------------------------------------------------------------------------------------------------------
+
+-- Maintenance for Vehicle 1
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (11, 'Oil Change', 50.00);
+
+-- Maintenance for Vehicle 2
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (12, 'Brake Inspection', 75.00);
+
+-- Maintenance for Vehicle 1
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (13, 'Tire Rotation', 30.00);
+
+-- Maintenance for Vehicle 3
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (14, 'Air Filter Replacement', 20.00);
+
+-- Maintenance for Vehicle 2
+INSERT INTO Maintenance (VehicleID, MaintenanceDescription, MaintenanceCost)
+VALUES (15, 'Coolant Flush', 60.00);
+
+---------------------------------------------------------------------------------------------------------------------
+
+-- Retrieve and display customer information
+SELECT * FROM Customers;
+
+-- Retrieve and display vehicle details
+SELECT * FROM Vehicles;
+
+-- Retrieve and display maintenance records
+SELECT * FROM Maintenance;
+
+-- Retrieve and display rental booking records
+SELECT * FROM RentalBooking;
+
+-- Retrieve and display rental transaction records
+SELECT * FROM RentalTransaction;
+
+-- Retrieve and display vehicle return records
+SELECT * FROM VehicleReturns;
