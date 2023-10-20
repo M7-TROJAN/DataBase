@@ -113,7 +113,7 @@ INSERT INTO VehiclesCategory (CategoryName) VALUES
 
 -- Example to Insert Vehicles
 ```sql
--- Insert a Sample Vehicles
+-- Insert a Sample Vehicle
 INSERT INTO Vehicles (Make, Model, Year, mileage, FuelTypeID, PlateNumber, CarCategoryID, RentalPricePerDay, ISAvilableForRent)
 VALUES ('Toyota', 'Camry', '2021-01-01', 10000, 1, 'ABC123', 1, 50.00, 1),
 	   ('Tesla', 'Model 3', '2023-01-01', 0, 4, 'TESLA001', 2, 80.00, 1);
@@ -166,7 +166,7 @@ DECLARE
 -- Assign values to the variables
 
 -- Assume that the customer who is going to rent the car already exists in the database, 
--- so we don't need to include him as a new record
+-- so we don't need to include him as a new record We Will Retrive Him From Customers Table.
 SELECT @CustomerID = (SELECT CustomerID FROM Customers WHERE CustomerName = 'Mahmoud Mohamed');
 
 -- Retrieve the VehicleID from the Vehicles table
