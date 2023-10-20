@@ -85,8 +85,8 @@ Suppose you want to book a rental for a customer. You can use the following SQL 
 ```
 
 ## Full Real Examples
-Test Scripts for Database Verification
-*Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro*
+**Test Scripts for Database Verification**
+Important Note: Execute Each Script Separately to Prevent Errors; Avoid Running All at Once Take Care, Bro
 
 - Example to insert fuel types
 ```SQL
