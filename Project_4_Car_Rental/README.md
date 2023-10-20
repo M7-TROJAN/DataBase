@@ -140,16 +140,22 @@ INSERT INTO Customers (CustomerName, National_ID_Number, Driver_License_Number, 
 VALUES ('Mohamed Salah', '30003031491528', '43210987654321', '01129416608');
 ```
 
-- Example to insert a booking record
+- Example for Creating a New Rental Booking and Recording the Associated Transaction:
 
 ```sql
 -- Start a transaction
 BEGIN TRANSACTION;
 
 -- Declare variables for input data
-DECLARE @CustomerID INT, @VehicleID INT, @RentalDurationDays TINYINT, 
-@PickupLocation NVARCHAR(100), @DropOffLocation NVARCHAR(100), 
-@RentalPricePerDay SMALLMONEY, @InitialCheckNotes NVARCHAR(500);
+DECLARE 
+@CustomerID INT,
+@VehicleID INT, 
+@RentalDurationDays TINYINT,
+@RentalStartDate DATE, 
+@PickupLocation NVARCHAR(100), 
+@DropOffLocation NVARCHAR(100), 
+@RentalPricePerDay SMALLMONEY, 
+@InitialCheckNotes NVARCHAR(500);
 
 -- Assign values to the variables
 
@@ -165,10 +171,11 @@ WHERE Make = 'Toyota' AND Year = '2021-01-01' AND Model = 'Camry' AND ISAvilable
 SELECT @RentalPricePerDay = (SELECT RentalPricePerDay FROM Vehicles WHERE VehicleID = @VehicleID);
 
 -- Set other variables
-SELECT @RentalDurationDays = 7;
-SELECT @PickupLocation = 'Test Pickup Location';
-SELECT @DropOffLocation = 'Test DropOff Location';
-SELECT @InitialCheckNotes = 'Test Check Notes';
+SELECT @RentalDurationDays = 7; -- Replace with the actual Rental Duration Days
+SELECT @RentalStartDate = GETDATE(); -- Use the current date as the start date 
+SELECT @PickupLocation = 'Test Pickup Location'; -- Replace with the actual Pickup Location
+SELECT @DropOffLocation = 'Test DropOff Location'; -- Replace with the actual DropOff Location
+SELECT @InitialCheckNotes = 'Test Check Notes'; -- Replace with the actual Check Notes
 
 -- Insert the rental booking record
 INSERT INTO RentalBooking (CustomerID, VehicleID, RentalDurationDays, RentalStartDate, PickupLocation, DropOffLocation, RentalPricePerDay, InitialCheckNotes)
@@ -176,12 +183,58 @@ VALUES (
     @CustomerID,
     @VehicleID,
     @RentalDurationDays,
-    GETDATE(), -- Use the current date as the start date 
+    @RentalStartDate,
     @PickupLocation,
     @DropOffLocation,
     @RentalPricePerDay,
     @InitialCheckNotes
 );
+
+-- Retrieve the 'BookingID' of the inserted RentalBooking record
+DECLARE @BookingID INT;
+SELECT @BookingID = SCOPE_IDENTITY();
+
+-- Retrieve 'InitialTotalDueAmount' From the inserted RentalBooking record
+DECLARE @PaidInitialTotalDueAmount SMALLMONEY;
+SELECT @PaidInitialTotalDueAmount = (SELECT InitialTotalDueAmount FROM RentalBooking WHERE BookingID = @BookingID );
+
+
+-- Insert a record into the RentalTransaction table to track the initial payment for a rental booking.
+
+-- Define variables for the input data.
+DECLARE @PaymentDetails NVARCHAR(100) = 'Payment received for initial booking';
+DECLARE @TransactionDate DATETIME = GETDATE();
+DECLARE @ReturnID INT = NULL; -- We will update this when the customer returns the car.
+DECLARE @ActualTotalDueAmount SMALLMONEY = NULL; -- We will update this when the customer returns the car.
+DECLARE @TotalRemaining SMALLMONEY = NULL; -- We will update this when the customer returns the car.
+DECLARE @TotalRefundedAmount SMALLMONEY = NULL; -- We will update this when the customer returns the car.
+DECLARE @UpdatedTransactionDate DATETIME = NULL; -- We will update this when the customer returns the car.
+
+-- Insert the record into the RentalTransaction table.
+INSERT INTO RentalTransaction (
+    BookingID,
+    PaidInitialTotalDueAmount,
+    PaymentDetails,
+    TransactionDate,
+    ReturnID,
+    ActualTotalDueAmount,
+    TotalRemaining,
+    TotalRefundedAmount,
+    UpdatedTransactionDate
+)
+VALUES (
+    @BookingID, -- Booking ID for the associated rental.
+    @PaidInitialTotalDueAmount, -- Amount paid initially.
+    @PaymentDetails, -- Details of the payment.
+    @TransactionDate, -- Date and time of the transaction.
+    @ReturnID, -- ID of the return record (null for now, to be updated).
+    @ActualTotalDueAmount, -- Total amount due (null for now, to be updated).
+    @TotalRemaining, -- Total remaining amount (null for now, to be updated).
+    @TotalRefundedAmount, -- Total refunded amount (null for now, to be updated).
+    @UpdatedTransactionDate -- Date when the transaction is updated (null for now, to be updated).
+);
+
+
 
 -- Check if the insertion was successful
 IF @@ERROR = 0
@@ -203,67 +256,64 @@ BEGIN
 END;
 ```
 
-- Example for Inserting a Record into VehicleReturns table and RentalTransaction table
+- Example for Recording a Vehicle Return and Updating Rental Transaction
 
 ```sql
--- Start a transaction
+-- Start a database transaction
 BEGIN TRANSACTION;
 
 -- Declare variables for input data
 DECLARE 
-@BookingID INT, 
-@ActualReturnDate DATETIME,
-@ActualRentalDays TINYINT,
-@Mileage SMALLINT,
-@ConsumedMileage SMALLINT,
-@FinalCheckNotes NVARCHAR(500),
-@AdditionalCharges SMALLMONEY, 
-@ActualTotalDueAmount SMALLMONEY;
+@BookingID INT,  -- ID of the booking for the vehicle return
+@ActualReturnDate DATETIME,  -- Actual date and time of the vehicle return
+@ActualRentalDays TINYINT,  -- Number of days the vehicle was rented
+@CurrentMileage SMALLINT,  -- Mileage of the vehicle at the time of return
+@ConsumedMileage SMALLINT,  -- Mileage consumed during the rental
+@FinalCheckNotes NVARCHAR(500),  -- Notes about the condition of the returned vehicle
+@AdditionalCharges SMALLMONEY,  -- Any additional charges incurred during the rental
+@ActualTotalDueAmount SMALLMONEY;  -- Total amount due for the rental
 
 -- Assign values to the variables
 
-SELECT @BookingID = 1; -- Replace with the actual BookingID
-SELECT @ActualReturnDate = '2023-10-25 12:00:00';
+-- Replace these values with actual data
+SELECT @BookingID = 2;  -- Replace with the actual BookingID
+SELECT @ActualReturnDate = '2023-10-27 12:00:00';  -- Replace with the actual return date
 
--- Calculate the number of rental days
+-- Calculate the number of rental days based on the rental start date and actual return date
 SELECT @ActualRentalDays = DATEDIFF(DAY, (SELECT RentalStartDate FROM RentalBooking WHERE BookingID = @BookingID), @ActualReturnDate);
 
+-- Replace with the actual mileage of the returned vehicle
+SELECT @CurrentMileage = 10200; 
 
-SELECT @Mileage = 10200; -- Replace with the actual Mileage
-
--- Calculate the consumed mileage
-SELECT @ConsumedMileage = @Mileage - (SELECT Vehicles.mileage
+-- Calculate the consumed mileage by subtracting the current mileage from the mileage at the start of the rental
+SELECT @ConsumedMileage = @CurrentMileage - (SELECT Vehicles.mileage
 FROM RentalBooking
 JOIN Vehicles ON Vehicles.VehicleID = RentalBooking.VehicleID
 WHERE RentalBooking.BookingID = @BookingID);
 
--- Set other variables
-SELECT @FinalCheckNotes = 'All good'; -- Replace with the actual notes
-SELECT @AdditionalCharges = 25.00; -- Replace with the actual charges
+-- Provide notes on the condition of the vehicle at return
+SELECT @FinalCheckNotes = 'All good';  -- Replace with actual notes
 
--- Calculate the actual total due amount
--- To determine the total due amount, we first need to fetch the 'RentalPricePerDay' from the Vehicles table, 
--- which is based on the VehicleID obtained from the RentalBooking table using the @BookingID.
--- Next, we calculate the total by multiplying '@ActualRentalDays' by 'RentalPricePerDay' and adding the '@AdditionalCharges'.
+-- Include any additional charges incurred during the rental
+SELECT @AdditionalCharges = 25.00;  -- Replace with actual charges
 
+-- Calculate the actual total amount due, considering the rental duration and additional charges
+
+-- Retrieve the VehicleID associated with the BookingID from the RentalBooking table
 DECLARE @VehicleID INT;
-
--- Retrieve the VehicleID associated with the @BookingID from the RentalBooking table, 
--- which we will use to fetch the 'RentalPricePerDay' from the Vehicles table.
 SELECT @VehicleID = (SELECT VehicleID FROM RentalBooking WHERE BookingID = @BookingID)
-PRINT @VehicleID
 
--- Calculate the actual total due amount, taking into account the rental duration and any additional charges.
+-- Calculate the total due amount, taking into account the rental duration and any additional charges
 SELECT @ActualTotalDueAmount = (@ActualRentalDays * (SELECT RentalPricePerDay FROM Vehicles WHERE VehicleID = @VehicleID)) + @AdditionalCharges;
 
-
 -- Insert the record into the VehicleReturns table
+
 INSERT INTO VehicleReturns (BookingID, ActualReturnDate, ActualRentalDays, Mileage, ConsumedMileage, FinalCheckNotes, AdditionalCharges, ActualTotalDueAmount)
 VALUES (
 	@BookingID, 
 	@ActualReturnDate, 
 	@ActualRentalDays, 
-	@Mileage, 
+	@CurrentMileage, 
 	@ConsumedMileage, 
 	@FinalCheckNotes, 
 	@AdditionalCharges, 
@@ -274,51 +324,46 @@ VALUES (
 DECLARE @ReturnID INT;
 SELECT @ReturnID = SCOPE_IDENTITY();
 
--- Retrieve the InitialTotalDueAmount From The RentalBooking Table
-DECLARE @PaidInitialTotalDueAmount SMALLMONEY;
-SELECT @PaidInitialTotalDueAmount = (SELECT InitialTotalDueAmount FROM RentalBooking WHERE BookingID = @BookingID);
+-- Retrieve the paid initial total due amount
 
--- Insert the corresponding record into the RentalTransaction table
-INSERT INTO RentalTransaction (
-	BookingID, ReturnID, PaymentDetails, PaidInitialTotalDueAmount, ActualTotalDueAmount, 
-	TotalRemaining, TotalRefundedAmount, TransactionDate, UpdatedTransactionDate)
-VALUES (
-	@BookingID, 
-	@ReturnID, 
-	'Payment received for initial booking',  -- Provide more specific information about the payment
-	@PaidInitialTotalDueAmount, 
-	@ActualTotalDueAmount, 
-	---- Calculate TotalRemaining
-	CASE
+DECLARE @PaidInitialTotalDueAmount SMALLMONEY;
+SELECT @PaidInitialTotalDueAmount = PaidInitialTotalDueAmount 
+FROM RentalTransaction
+WHERE BookingID = @BookingID;
+
+-- Update the RentalTransaction Table
+
+UPDATE RentalTransaction
+SET ReturnID = @ReturnID,
+	ActualTotalDueAmount = @ActualTotalDueAmount,
+	TotalRemaining = CASE
 		WHEN @ActualTotalDueAmount > @PaidInitialTotalDueAmount THEN @ActualTotalDueAmount - @PaidInitialTotalDueAmount
 		ELSE 0.00  -- Ensure that TotalRemaining is not negative
 	END,
-	-- Calculate TotalRefundedAmount
-	CASE
+	TotalRefundedAmount = CASE
 		WHEN @PaidInitialTotalDueAmount > @ActualTotalDueAmount THEN @PaidInitialTotalDueAmount - @ActualTotalDueAmount
 		ELSE 0.00  -- Ensure that TotalRefundedAmount is not negative
 	END,
-	GETDATE(), 
-	NULL
-);
+	UpdatedTransactionDate = @ActualReturnDate
 
+WHERE BookingID = @BookingID;
 
--- Check if the insertion was successful
+-- Check if the insertion and update were successful
 IF @@ERROR = 0
 BEGIN
     -- If successful, commit the transaction
 
-    -- Note: Don't Forget To Update 'mileage' Vehicles Column To The New Mileage '@Mileage'
+    -- Update the vehicle's mileage in the Vehicles table
     UPDATE Vehicles
-    SET mileage = @Mileage
+    SET mileage = @CurrentMileage
     WHERE VehicleID = @VehicleID;
 
-    -- Note: Set 'ISAvilableForRent' in the Vehicles table to 1 if the FinalCheckNotes indicate that the vehicle is in good condition
+    -- Set 'ISAvailableForRent' in the Vehicles table to 1 if the FinalCheckNotes indicate that the vehicle is in good condition
     -- (Assuming '0' represents a problem with the car)
     IF @FinalCheckNotes <> '0'
     BEGIN
         UPDATE Vehicles
-        SET ISAvilableForRent = 1
+        SET ISAvailableForRent = 1
         WHERE VehicleID = @VehicleID;
     END
 
