@@ -86,9 +86,9 @@ CREATE TABLE VehicleReturns (
     ActualRentalDays TINYINT NOT NULL,
     Mileage SMALLINT NOT NULL,
     ConsumedMileage SMALLINT NOT NULL, -- الأميال المستهلكة The additional mileage driven during the rental period, calculated as the difference between the current mileage and the vehicle's mileage at the start of the rental.
-    FinalCheckNotes NVARCHAR(500),
-    AdditionalCharges SMALLMONEY, -- رسوم إضافية
-    ActualTotalDueAmount SMALLMONEY, -- إجمالي المبلغ المستحق الفعلي
+    FinalCheckNotes NVARCHAR(500) NOT NULL,
+    AdditionalCharges SMALLMONEY NOT NULL, -- رسوم إضافية
+    ActualTotalDueAmount SMALLMONEY Not NULL, -- إجمالي المبلغ المستحق الفعلي
     CONSTRAINT FK_VehicleReturns_BookingID FOREIGN KEY (BookingID) REFERENCES RentalBooking(BookingID),
 );
 
@@ -96,17 +96,18 @@ CREATE TABLE VehicleReturns (
 CREATE TABLE RentalTransaction (
     TransactionID INT IDENTITY(1, 1) PRIMARY KEY,
     BookingID INT UNIQUE NOT NULL, -- Foreign key reference to the RentalBooking table's BookingID.
-    ReturnID INT UNIQUE NOT NULL, -- Foreign key reference to the VehicleReturns table's ReturnID.
-    PaymentDetails NVARCHAR(100),
-    PaidInitialTotalDueAmount SMALLMONEY NOT NULL, -- إجمالي المبلغ المستحق الأولي المدفوع
-    ActualTotalDueAmount SMALLMONEY NOT NULL, -- إجمالي المبلغ المستحق الفعلي
-    TotalRemaining SMALLMONEY NOT NULL, -- اجمالي المتبقي
+	PaidInitialTotalDueAmount SMALLMONEY NOT NULL, -- إجمالي المبلغ المستحق الأولي المدفوع
+    PaymentDetails NVARCHAR(100) NOT NULL,
+	TransactionDate DATETIME NOT NULL,
+	ReturnID INT UNIQUE, -- Foreign key reference to the VehicleReturns table's ReturnID.
+    ActualTotalDueAmount SMALLMONEY , -- إجمالي المبلغ المستحق الفعلي
+    TotalRemaining SMALLMONEY , -- اجمالي المتبقي
     TotalRefundedAmount SMALLMONEY, -- إجمالي المبلغ المسترد
-    TransactionDate DATETIME NOT NULL,
     UpdatedTransactionDate DATETIME,
     CONSTRAINT FK_RentalTransaction_BookingID FOREIGN KEY (BookingID) REFERENCES RentalBooking(BookingID),
     CONSTRAINT FK_RentalTransaction_ReturnID FOREIGN KEY (ReturnID) REFERENCES VehicleReturns(ReturnID)
 );
+
 
 
 
