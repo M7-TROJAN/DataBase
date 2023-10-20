@@ -81,10 +81,7 @@ Suppose you want to book a rental for a customer. You can use the following SQL 
 -- Get the BookingID of the newly inserted Booking
 
 -- Insert a record into the RentalTransaction table to track the initial payment for a rental booking.
-INSERT INTO RentalTransaction ( BookingID, PaidInitialTotalDueAmount, PaymentDetails, TransactionDate, ReturnID, ActualTotalDueAmount,
-    TotalRemaining, TotalRefundedAmount, UpdatedTransactionDate
-)
-VALUES ...
+-- INSERT INTO RentalTransaction ( BookingID, PaidInitialTotalDueAmount, PaymentDetails, TransactionDate, ReturnID, ActualTotalDueAmount, TotalRemaining, TotalRefundedAmount, UpdatedTransactionDate ) VALUES ...
 ```
 
 ## Full Real Examples
