@@ -8,8 +8,8 @@ Use Car_Rental;
 CREATE TABLE Customers (
     CustomerID INT IDENTITY(1, 1) PRIMARY KEY,
     CustomerName NVARCHAR(200) UNIQUE NOT NULL,
-	National_ID_Number CHAR(14) UNIQUE NOT NULL,
-	Driver_License_Number CHAR(14) UNIQUE NOT NULL,
+    National_ID_Number CHAR(14) UNIQUE NOT NULL,
+    Driver_License_Number CHAR(14) UNIQUE NOT NULL,
     Phone CHAR(11) NOT NULL CHECK (ISNUMERIC(Phone) = 1), -- Ensure it's numeric
 
 	-- Ensure that each record has valid 'National ID' and Valid 'Driver License Number'
@@ -96,10 +96,10 @@ CREATE TABLE VehicleReturns (
 CREATE TABLE RentalTransaction (
     TransactionID INT IDENTITY(1, 1) PRIMARY KEY,
     BookingID INT UNIQUE NOT NULL, -- Foreign key reference to the RentalBooking table's BookingID.
-	PaidInitialTotalDueAmount SMALLMONEY NOT NULL, -- إجمالي المبلغ المستحق الأولي المدفوع
+    PaidInitialTotalDueAmount SMALLMONEY NOT NULL, -- إجمالي المبلغ المستحق الأولي المدفوع
     PaymentDetails NVARCHAR(100) NOT NULL,
-	TransactionDate DATETIME NOT NULL,
-	ReturnID INT UNIQUE, -- Foreign key reference to the VehicleReturns table's ReturnID.
+    TransactionDate DATETIME NOT NULL,
+    ReturnID INT UNIQUE, -- Foreign key reference to the VehicleReturns table's ReturnID.
     ActualTotalDueAmount SMALLMONEY , -- إجمالي المبلغ المستحق الفعلي
     TotalRemaining SMALLMONEY , -- اجمالي المتبقي
     TotalRefundedAmount SMALLMONEY, -- إجمالي المبلغ المسترد
