@@ -12,7 +12,8 @@ The OnlineStore Database serves as a valuable learning tool, allowing you to pra
 1. Make sure you have SQL Server installed on your system.
 2. Import the database schema by running the schema.sql script on your SQL Server. This script creates the necessary tables, constraints, and relationships.
 3. Insert sample data and records using the insert-data.sql script as an example. You can customize this script to add more data as needed.
-4. Update and customize the scripts to meet your specific use case.
+4. Browse the Examples.sql file and try the examples provided, and you can add examples of your own.
+5. Update and customize the scripts to meet your specific use case.
 
 ## Project Files
 
@@ -23,6 +24,9 @@ The OnlineStore Database serves as a valuable learning tool, allowing you to pra
 - **Schema.sql**: SQL script to create the database schema, including tables, constraints, and relationships.
 
 - **insert-data.sql**: SQL script to insert sample data into the database tables to test and validate the database functionality.
+
+- **Examples.sql**: This File Contains Some Example Queries for Using the OnlineStore Database Schema These queries demonstrate how to perform various operations with the database, such as updating customer information, retrieving orders, calculating sales, and more. You can use these examples as a reference to understand and work with the database.
+
 
 
 ## Relational Schema
