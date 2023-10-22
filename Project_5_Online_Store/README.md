@@ -53,7 +53,7 @@ The database schema has been designed to support the functionality of an online 
 In addition to the examples provided, you can find more diverse and complex examples in the repository. These examples illustrate how the database schema can be applied in various scenarios.
 
 ## Code Comments
-We've added inline comments within the SQL code to make it more understandable, especially for beginners. These comments explain complex queries and the reasoning behind certain decisions.
+I've added inline comments within the SQL code to make it more understandable, especially for beginners. These comments explain complex queries and the reasoning behind certain decisions.
 
 ## Full Real Examples
 **Test Scripts for Database Verification**
