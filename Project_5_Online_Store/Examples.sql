@@ -118,5 +118,12 @@ FROM Orders
 JOIN Customers ON Orders.CustomerID = Customers.CustomerID
 WHERE Orders.OrderDate BETWEEN '2023-01-01' AND '2023-03-31';
 
+-- Example 16: calculates the average rating for each product in the ProductCatalog Table
+SELECT ProductCatalog.ProductID, AVG(Reviews.Rating) AS AverageRating
+FROM ProductCatalog
+JOIN Reviews ON ProductCatalog.ProductID = Reviews.ProductID
+GROUP BY ProductCatalog.ProductID;
+
+
 -- Add more examples and scenarios as needed, and customize the queries according to your specific requirements.
 -- Best Regards, Mahmoud
