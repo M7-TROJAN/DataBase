@@ -214,6 +214,14 @@ BEGIN CATCH
 END CATCH;
 ```
 
+- Example To Insert sample reviews into the Reviews table
+  ```sql
+INSERT INTO Reviews (ProductID, CustomerID, ReviewText, Rating, ReviewDate)
+VALUES
+    (1, 1, 'Great smartphone! I love it.', 4.5, '2023-10-15 09:30:00'),
+    (2, 2, 'Nice casual shirt. Comfortable to wear.', 4.0, '2023-10-16 14:15:00');
+```
+
 - Feel free to customize and extend the database schema to meet your specific requirements.
 
 ## License
