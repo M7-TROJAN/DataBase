@@ -48,3 +48,75 @@ WHERE ProductCatalog.QuantityInStock < 10;
 SELECT Orders.OrderID, Orders.OrderDate, OrderStatus.StatusName
 FROM Orders
 JOIN OrderStatus ON Orders.StatusID = OrderStatus.StatusID;
+
+-- Example 7: Retrieving Product Details with Images
+-- Retrieve product details along with their associated images
+SELECT ProductCatalog.ProductName, ProductCatalog.Description, ProductCatalog.Price, ProductImages.ImageURL
+FROM ProductCatalog
+JOIN ProductImages ON ProductCatalog.ProductID = ProductImages.ProductID;
+
+
+-- Example 8: Updating Order Status
+-- Update the order status for a specific order
+UPDATE Orders
+SET StatusID = 3 -- Updating to "Delivered" status
+WHERE OrderID = 1;
+
+
+-- Example 9: Finding Best-Selling Products
+-- Find the best-selling products based on the total quantity sold
+SELECT TOP 5 ProductCatalog.ProductName, SUM(OrderItems.Quantity) AS TotalQuantitySold
+FROM ProductCatalog
+JOIN OrderItems ON ProductCatalog.ProductID = OrderItems.ProductID
+GROUP BY ProductCatalog.ProductName
+ORDER BY TotalQuantitySold DESC;
+
+
+-- Example 10: Retrieving Orders with Customer and Shipping Information
+-- Retrieve orders along with customer and shipping information
+SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName, Shippings.CarrierName, Shippings.TrackingNumber
+FROM Orders
+JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+LEFT JOIN Shippings ON Orders.OrderID = Shippings.OrderID;
+
+
+-- Example 11: Finding Customers with the Highest Total Spending
+-- Find the top-spending customers based on the total amount spent
+SELECT TOP 5 Customers.CustomerName, SUM(Orders.TotalAmount) AS TotalSpending
+FROM Customers
+JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+GROUP BY Customers.CustomerName
+ORDER BY TotalSpending DESC;
+
+
+-- Example 12: Retrieving Products by Category
+-- Retrieve products within a specific category
+SELECT ProductCatalog.ProductName, ProductCatalog.Description, ProductCatalog.Price
+FROM ProductCatalog
+WHERE ProductCatalog.CategoryID = 3; -- Change the CategoryID as needed.
+
+
+-- Example 13: Finding Products with No Reviews
+-- Find products that have not received any reviews
+SELECT ProductCatalog.ProductName
+FROM ProductCatalog
+LEFT JOIN Reviews ON ProductCatalog.ProductID = Reviews.ProductID
+WHERE Reviews.ReviewID IS NULL;
+
+
+-- Example 14: Updating Product Price
+-- Update the price of a specific product
+UPDATE ProductCatalog
+SET Price = 89.99
+WHERE ProductName = 'Kitchen Blender';
+
+
+-- Example 15: Retrieving Orders Within a Date Range
+-- Retrieve orders placed within a specific date range
+SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName
+FROM Orders
+JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+WHERE Orders.OrderDate BETWEEN '2023-01-01' AND '2023-03-31';
+
+-- Add more examples and scenarios as needed, and customize the queries according to your specific requirements.
+-- Best Regards, Mahmoud
