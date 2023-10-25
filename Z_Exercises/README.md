@@ -10,7 +10,7 @@ Before you get started, ensure you have a SQL Server ready to go. You'll also ne
 
 Inside the "Sample_Database_To_Practice_On" folder, you'll find two sub-folders:
 
-1. VehicleMakesDB Folder: This one contains the VehicleMakesDB.bak file. You'll use this for problems 1 to 50, and there's also a diagram (relational_schema_diagram.png).
+1. VehicleMakesDB Folder: This one contains the VehicleMakesDB.bak file. which it serves as a sample database for problems 1 to 50, and there's also a diagram (relational_schema_diagram.png).
 
 2. EmployeesDB Folder: Inside, you'll discover the EmployeesDB.bak file, which serves as a sample database for problems 51 to 54. It includes a diagram (relational_schema_diagram.png) too.
 
