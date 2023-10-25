@@ -63,8 +63,7 @@ To work on a problem:
 
 1. [Problem 1](Problems/Problem43/Problem43.sql): Get Make and Total Number Of Doors Manufactured Per Make.
 2. [Problem 2](Problems/Problem30/Problem30.sql): Get all Vehicle_Display_Name, NumDoors and add extra column to describe number of doors by words
-3. 
-4. [Problem 54](Problems/Problem50/Problem50.sql): Get all Fuel Types in random order.
+3. [Problem 54](Problems/Problem50/Problem50.sql): Get all Fuel Types in random order.
 
 ## Contributing
 
