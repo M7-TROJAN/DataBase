@@ -94,4 +94,35 @@ Synthetic databases play a crucial role in various fields, including software te
 
 Generated synthetic data in CSV format can be imported into SQL Server Management Studio. Follow the import process to populate tables in SQL Server databases with the synthetic data created from the CSV file.
 
+### Steps for Importing Data:
+
+1. **Open SQL Server Management Studio (SSMS)** and connect to the target database where you want to import the synthetic data.
+
+2. **Right-click on the database name** in the Object Explorer pane, select `Tasks`, and then click on `Import Data...`.
+
+3. In the SQL Server Import and Export Wizard:
+
+    - **Data Source:** Select `Flat File Source` to specify your CSV file as the source.
+    - **File Name:** Browse and choose the generated `fake_data.csv`.
+    - **Format:** Ensure the format settings match your CSV file (e.g., delimited or fixed width).
+    - **Column Heading Rows:** Check if the first row contains column headings.
+
+4. **Choose a Destination:** Select `SQL Server Native Client 11.0` or appropriate ODBC provider as the destination.
+
+5. **Server Name:** Enter the server name where your SQL Server is hosted.
+
+6. **Database:** Pick the database where you want to import the data.
+
+7. **Copy Data:** Choose whether to copy data to an existing table or create a new table.
+
+8. **Map Source and Destination Columns:** Match CSV columns with the corresponding database table columns.
+
+9. **Run the Import:** Review the summary and run the import process.
+
+10. **Verify Data Import:** Check your SQL Server database to ensure the data has been successfully imported into the specified table.
+
+**Note:** The Import Data Wizard's step-by-step process may slightly differ based on the SQL Server version you are using. Ensure you appropriately adjust the selections according to the wizard options and your data requirements.
+
+The imported synthetic data will now be available in your SQL Server database tables, providing a test environment for performing SQL operations and analysis.
+
 Happy learning and coding! 🚀
