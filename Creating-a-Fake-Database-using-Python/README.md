@@ -79,16 +79,10 @@ connection.commit()
 connection.close()
 ```
 
-## Author
+## How synthetic databases helped me
 
-- Mahmoud Mohamed
-- Email: mahmoud.abdalaziz@outlook.com
-- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
-
-
-## Importance of Synthetic Databases
-
-Synthetic databases play a crucial role in various fields, including software testing, data analysis, and learning SQL. They help in understanding database operations and serve as test environments for real-world scenarios.
+SSynthetic Databases it's serves as a test environment for real-world scenarios.
+Mock Databases have played a pivotal role in my learning journey, allowing me to practically apply all the concepts I've learned in database materials. They have provided me with the opportunity to experiment with various scenarios and extensively test my understanding of the concepts covered in my database learning. The practice of using synthetic databases has significantly enhanced my ability to grasp SQL operations and refine my skills through practical applications. This approach has not only allowed me to apply theoretical knowledge but also to gain hands-on experience, improving my confidence and proficiency in managing databases.
 
 ## Importing Synthetic Data to SQL Server
 
@@ -121,8 +115,12 @@ Generated synthetic data in CSV format can be imported into SQL Server Managemen
 
 10. **Verify Data Import:** Check your SQL Server database to ensure the data has been successfully imported into the specified table.
 
-**Note:** The Import Data Wizard's step-by-step process may slightly differ based on the SQL Server version you are using. Ensure you appropriately adjust the selections according to the wizard options and your data requirements.
-
 The imported synthetic data will now be available in your SQL Server database tables, providing a test environment for performing SQL operations and analysis.
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
 
 Happy learning and coding! 🚀
