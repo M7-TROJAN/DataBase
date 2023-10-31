@@ -13,9 +13,6 @@ This guide illustrates how to utilize Python in conjunction with the Faker libra
 
 Creating synthetic data is a fundamental practice in database management, software testing, and learning SQL. Python's Faker library allows you to generate artificial data that closely resembles real-world information. This README demonstrates the creation of synthetic data in both a CSV file and an SQLite database, providing essential hands-on experience for anyone learning database operations.
 
-### Faker Samples
-For more examples and a consolidated view of various synthetic data generation methods using Faker, explore the [Faker Samples script](faker_data_samples.py). This script provides additional code snippets that demonstrate a wide range of Faker's capabilities in generating mock data.
-
 ## Instructions
 
 ### Generate Synthetic Data in a CSV File
@@ -81,6 +78,9 @@ for _ in range(1000):  # Adjust the range for the number of entries
 connection.commit()
 connection.close()
 ```
+
+### Faker Samples
+For more examples and a consolidated view of various synthetic data generation methods using Faker, explore the [Faker Samples script](faker_data_samples.py). This script provides additional code snippets that demonstrate a wide range of Faker's capabilities in generating mock data.
 
 ## How synthetic databases helped me
 
