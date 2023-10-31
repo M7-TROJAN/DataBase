@@ -6,6 +6,9 @@ fake = Faker()
 # Generate and print a first name
 print(f'First Name: {fake.first_name()}')
 
+# Generate and print a first name and specify the Gender (male - female)
+print(f'First Name: {fake.first_name_female()}')
+
 # Generate and print a last name
 print(f'Last Name: {fake.last_name()}')
 
