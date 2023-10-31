@@ -12,6 +12,9 @@ print(f'Last Name: {fake.last_name()}')
 # Generate and print a full name
 print(f'Full Name: {fake.name()}')
 
+# Generate and print a user name
+print(f'Full Name: {fake.user_name()}')
+
 # Generate and print an email address
 print(f'Email: {fake.email()}')
 
