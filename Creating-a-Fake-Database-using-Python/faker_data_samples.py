@@ -34,6 +34,9 @@ print(f'Phone Number: {fake.phone_number()}')
 # Generate and print a credit card number
 print(f'Credit Card Number: {fake.credit_card_number()}')
 
+# Generate and print a full credit card details
+print(f'Credit Card Number (Full): {fake.credit_card_full()}')
+
 # Generate and print a job title
 print(f'Job Title: {fake.job()}')
 
