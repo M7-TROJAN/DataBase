@@ -117,6 +117,9 @@ Generated synthetic data in CSV format can be imported into SQL Server Managemen
 
 The imported synthetic data will now be available in your SQL Server database tables, providing a test environment for performing SQL operations and analysis.
 
+## Sources
+- **Faker Documentation**: https://faker.readthedocs.io/en/master/
+
 ## Author
 
 - Mahmoud Mohamed
