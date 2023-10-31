@@ -18,8 +18,12 @@ print(f'Full Name: {fake.name()}')
 # Generate and print a user name
 print(f'Full Name: {fake.user_name()}')
 
-# Generate and print an email address
+# Generate and print a random email address
 print(f'Email: {fake.email()}')
+
+# Generate and print a free email address (random email address using domains from free email services such as Gmail, Yahoo, Outlook, etc.)
+print(f'Free Email: {fake.free_email()}')
+
 
 # Generate and print an address
 print(f'Address: {fake.address()}')
