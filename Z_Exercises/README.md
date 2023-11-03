@@ -65,13 +65,6 @@ To work on a problem:
 
 5. Feel free to modify the database to experiment and test different solutions.
 
-## Some Of Problems
-
-Here are some of the problems you can explore:
-1. [Problem 1](Problems/Problem1/Problem1.sql): Get Make and Total Number Of Doors Manufactured Per Make.
-2. [Problem 2](Problems/Problem30/Problem30.sql): Get all Vehicle_Display_Name, NumDoors and add extra column to describe number of doors by words
-3. [Problem 54](Problems/Problem50/Problem50.sql): Get all Fuel Types in random order.
-
 ## Contributing
 
 If you have additional SQL problems you'd like to contribute or if you find any issues with the existing problems, please feel free to open an issue or pull request on this repository.
