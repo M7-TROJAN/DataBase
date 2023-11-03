@@ -376,7 +376,7 @@ WHERE od.Discount <> 0;
 -- Create a report that fetch the first 5 character of categoryName from the category 
 -- tables and renamed as ShortInfo
 
-	 SELECT SUBSTRING(Description, 1, 5) AS ShortInfo
+	 SELECT SUBSTRING(categoryName, 1, 5) AS ShortInfo
 	 FROM
 	 Categories;
 	 
