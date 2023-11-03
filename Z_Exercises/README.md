@@ -6,7 +6,7 @@ Welcome agin! In this collection, you'll find a variety of SQL challenges, each 
 
 ### Prerequisites
 
-Before you get started, ensure you have a SQL Server ready to go. You'll also need the sample databases stored in the "Sample_Database_To_Practice_On" folder to work on the problems.
+Before you get started, ensure you have a SQL Server ready to go. You'll also need the sample databases stored in the "Sample_Database_To_Practice_On" and "practice-on-northwind-database" folders to work on the problems.
 
 Inside the "Sample_Database_To_Practice_On" folder, you'll find two sub-folders:
 
@@ -14,7 +14,13 @@ Inside the "Sample_Database_To_Practice_On" folder, you'll find two sub-folders:
 
 2. EmployeesDB Folder: Inside, you'll discover the EmployeesDB.bak file, which serves as a sample database for problems 51 to 54. It includes a diagram (relational_schema_diagram.png) too.
 
-These databases are where I practiced and improved my SQL skills by tackling problems.
+and Inside the "practice-on-northwind-database" folder, you'll find 3 Files:
+
+1. `northwind-Schema.png`: Illustrative diagram of the Northwind database schema.
+2. `NorthWindDatbaseScript.sql`: SQL script for creating the Northwind database.
+3. `queries.sql`: File containing 50 SQL queries and their corresponding answers for the Northwind database. These queries cover various data retrieval, manipulation, and reporting tasks within the database.
+
+These databases and their 104 queries are where I practiced and improved my SQL skills by tackling problems.
 You too can enjoy the learning journey!
 
 ### How to Restore the Sample Database
