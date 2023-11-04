@@ -10,7 +10,7 @@ suppliers, shipping, employees, and single-entry accounting.
 
 ### Data:
 - `NorthWindDatbaseScript.sql`: SQL script for creating the Northwind database.
-- `queries.sql`: File containing SQL queries and their corresponding answers for the Northwind database. These queries cover various data retrieval, manipulation, and reporting tasks within the database.
+- `queries_solution.sql`: File containing SQL queries and their corresponding answers for the Northwind database. These queries cover various data retrieval, manipulation, and reporting tasks within the database.
 
 ## Relational Schema
 
