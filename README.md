@@ -1,8 +1,8 @@
-# Database Exercises Repository
+# Database  Repository
 
-Welcome to the Database Exercises Repository! 📚
+Welcome to My Database Repository! 📚
 
-This repository is a collection of hands-on exercises and examples of practice working with databases, particularly SQL (Structured Query Language). 
+This repository is a collection of hands-on Projects, exercises, and examples of practice working with databases, particularly SQL (Structured Query Language). 
 
 ## What's Inside?
 - **SQL Exercises**: Dive into a variety of SQL exercises covering topics like SELECT queries, JOIN operations, indexing, and more.
